@@ -28,6 +28,20 @@ app.get("/download", (req, res) => {
   });
 });
 
+app.get("/version", (req, res) => {
+  exec("./src/version.sh", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Errore nell'esecuzione dello script: ${error.message}`);
+      return res.status(500).send("Errore nell'esecuzione dello script");
+    }
+    if (stderr) {
+      console.error(`Stderr: ${stderr}`);
+    }
+
+    // Controlla che il file esista e lo invia
+    res.status(200).send(stdout.replace("\n", ""));
+  });
+});
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });

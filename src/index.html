@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Grimoar - Download APK</title>
-        <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grimoar - Download APK</title>
+    <style>
     /* Imposta i colori principali */
     :root {
       --background-color: #1b0131; /* Viola scuro */
@@ -61,21 +61,41 @@
       color: var(--text-color);
     }
   </style>
-    </head>
-    <body>
-        <div>
-            <h1>Grimoar</h1>
-            <p>Un diario magico per segnare le tue avventure nei giochi di
-                ruolo.</p>
-            <button class="download-btn" id="downloadBtn">Scarica APK</button>
-            <div class="footer">© 2024 Grimoar - Tieni traccia delle tue
-                storie</div>
-        </div>
+  </head>
+  <body>
+    <div>
+      <h1>Grimoar</h1>
+      <p>Un diario magico per segnare le tue avventure nei giochi di
+        ruolo.</p>
+      <button class="download-btn" id="downloadBtn">Scarica APK</button>
+      <div style="margin-top:10px">
+        <small id="version"></small>
+      </div>
+      <div class="footer">© 2024 Grimoar - Tieni traccia delle tue
+        storie</div>
+    </div>
 
-        <script>
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-      window.location.href = '/download'; // Punta al tuo endpoint backend
-    });
-  </script>
-    </body>
+    <script>
+          document.getElementById('downloadBtn').addEventListener('click', () => {
+            window.location.href = '/download'; // Punta al tuo endpoint backend
+          });
+        </script>
+
+    <script>
+      fetch('/version')
+        .then(response => response.text())
+        .then(data => {
+          const readableDate = new Date(data).toLocaleDateString("it-IT",{
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })
+
+          document.getElementById('version').innerText = `Versione: ${readableDate}`
+        })
+
+    </script>
+  </body>
 </html>
