@@ -2,7 +2,7 @@
 
 owner="d-beezee"
 repo="grimoar"
-workflow_id="unsigned.yml"
+workflow_id="release.yml"
 
 RUNS=$(curl -H "Authorization: token $TOKEN"   "https://api.github.com/repos/$owner/$repo/actions/workflows/$workflow_id/runs?status=success&per_page=1")
 
