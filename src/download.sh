@@ -11,12 +11,14 @@ run_id=$(echo $RUNS | jq -r '.workflow_runs[0].id')
 # Ottieni gli artifact per la run
 RUN=$(curl  -H "Authorization: token $TOKEN" "https://api.github.com/repos/$owner/$repo/actions/runs/$run_id/artifacts")
 
-artifact_id=$(echo $RUN | jq -r '.artifacts[0].id')
 
-# Scarica uno specifico artifact
-curl -L -H "Authorization: token $TOKEN" \
-"https://api.github.com/repos/$owner/$repo/actions/artifacts/$artifact_id/zip" \
---output artifact.zip
+for archive_download_url in $(echo $RUN | jq -r '.artifacts[].archive_download_url'); do
+    
+    curl -L -H "Authorization: token $TOKEN" \
+    $archive_download_url \
+    --output artifact.zip
+    unzip -o artifact.zip
+    rm artifact.zip
+    
+done
 
-unzip -o artifact.zip
-rm artifact.zip
