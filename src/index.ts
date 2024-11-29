@@ -46,6 +46,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+app.get("/privacy", (req, res) => {
+  res.sendFile(path.join(__dirname, "privacy.html"));
+});
+
+app.get("/delete", (req, res) => {
+  res.sendFile(path.join(__dirname, "delete.html"));
+});
+
 // Avvia il server
 app.listen(port, () => {
   console.log(`Server in ascolto su http://localhost:${port}`);
